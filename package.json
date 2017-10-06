@@ -2,13 +2,20 @@
   "name": "serverless-aggregations",
   "version": "1.0.0",
   "description": "AWS Lambda Project with NodeJS codebase",
-  "repository": "git@github.com:hvk/mvm-lambdas.git",
+  "repository": "git@github.com:dml/serverless-aggregations-nodejs.git",
   "author": "Dmitry Larkin <dmitry.larkin@gmail.com>",
+  "license": "MIT",
   "scripts": {
-    "test": "mocha --compilers js:babel-register \"./tests/**/*.spec.js\""
+    "test": "mocha \"./*.spec.js\""
   },
   "dependencies": {
-    "aws-sdk": "^2.41.0"
+    "aws-sdk": "^2.41.0",
+    "moment": "^2.18.1",
+    "moment-range": "^3.0.3",
+    "pg-promise": "^6.10.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "serverless-plugin-optimize": "^3.0.3-rc.1"
+  }
 }
