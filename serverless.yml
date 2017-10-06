@@ -21,10 +21,10 @@ provider:
 
   vpc:
     securityGroupIds:
-      - sg-b449b7ce
+      - ${env:VPC_SECUIRY_GROUP_ID}
     subnetIds:
-      - subnet-ab5d0da7
-      - subnet-90a280bc
+      - ${env:VPC_SUBNET_FIRST_ID}
+      - ${env:VPC_SUBNET_SECOND_ID}
 
   environment:
     REDSHIFT_CREDENTIALS: ${env:REDSHIFT}
