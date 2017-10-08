@@ -14,39 +14,29 @@ AWS Lambda Example with NodeJS codebase
 Install NodeJS then install requirements
 
 ```
-
 npm install
-
 ```
 
 
 ## Deploy
 
-Create VPC network and subnets
+1. Create VPC network and subnets. Capture security group id and subnet ids.
+
+2. Add [S3 Endpoint](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html) into your VPC network
+
+3. Create Redshift cluster and target table.
 
 ```
+    export PGHOST=dbname.cccccccccc.us-east-1.redshift.amazonaws.com
+    export PGPORT=5439
+    export PGUSER=lambda
+    export PGPASSWORD=pass
+    export PGDATABASE=dbname
 
+    cat structure.sql | psql -e
 ```
 
-
-Create S3 Customer Gateway
-
-```
-
-```
-
-
-Create Redshift cluster and target table
-
-```
-
-... create redshfit instruction here ...
-
-
-```
-
-
-Setup AWS Lambda user
+4. Setup AWS Lambda user
 
 ```
     CREATE GROUP data_loaders;
@@ -54,10 +44,9 @@ Setup AWS Lambda user
     GRANT USAGE ON SCHEMA public TO GROUP data_loaders;
     GRANT INSERT ON ALL TABLES IN SCHEMA PUBLIC TO GROUP data_loaders;
     GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO GROUP data_loaders;
-
 ```
 
-Create KMS key and encrypt secure sensitive variables
+5. Create KMS key and encrypt secure sensitive variables
 
 ```
     aws kms create-key --description "your labmda creads key"
@@ -69,8 +58,7 @@ Create KMS key and encrypt secure sensitive variables
       --output text
 ```
 
-
-Setup environment variables
+6. Setup environment variables
 
 ```
 
@@ -87,8 +75,7 @@ Setup environment variables
 
 ```
 
-
-Deploy lambda and load CSV sample
+7. Deploy lambda and load CSV sample
 
 ```
     sls deploy -v
@@ -96,7 +83,7 @@ Deploy lambda and load CSV sample
     aws s3 cp demo.csv s3://serverless-demo-bucket/input/
 ```
 
-Now aggregation lambda might be executed along with cron job
+8. Now aggregation lambda might be executed along a cron job
 
 ```
     sls invoke -f aggregate -log
@@ -106,8 +93,8 @@ this produces a single report
 
 ```
     aws s3 cp s3://serverless-demo-bucket/output/report.000 . && \
-      mv report.000 report.csv && \
-      open report.csv
+        mv report.000 report.csv && \
+        open report.csv
 ```
 
 
